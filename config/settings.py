@@ -65,6 +65,8 @@ INSTALLED_APPS = [
     'home',
 ]
 
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -75,14 +77,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'request_viewer.middleware.RequestViewerMiddleware',
+
 ]
 
 ROOT_URLCONF = 'config.urls'
 
 # you need to change this if you ar not using localhost and 8080 port
 
-DEPLOYMENT_URL = 'http://127.0.0.1:8080/'
+DEPLOYMENT_URL = 'https://diary.trebuchet.one'
 
 TEMPLATES = [
     {
@@ -154,13 +156,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
-if DEBUG:
-    STATICFILES_DIRS = [
-        BASE_DIR / "static",
-    ]
-else:
-    STATIC_ROOT = "/var/www/html/static/"
+STATIC_ROOT = "/var/www/html/static/"
 
 if DEBUG:
     MEDIA_ROOT = BASE_DIR / 'media'

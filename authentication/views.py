@@ -1,14 +1,14 @@
+import django_filters
 from django.contrib.auth.models import User, Group
 from oauth2_provider.contrib.rest_framework import TokenHasScope, OAuth2Authentication
-from rest_framework import viewsets, generics, permissions
+from rest_framework import viewsets, generics, permissions, filters
 from rest_framework.decorators import action
 
-
-from .models import Tokens
 from rest_framework_social_oauth2.authentication import SocialAuthentication
 from .authentication import CsrfExemptSessionAuthentication
+from .models import Tokens
 from .permissions import IsOwner
-from .serializer import UserSerializer, GroupSerializer,GetTokensSerializer
+from .serializer import UserSerializer, GroupSerializer, GetTokensSerializer
 
 
 class UserApiViewSet(viewsets.ModelViewSet):
@@ -17,6 +17,8 @@ class UserApiViewSet(viewsets.ModelViewSet):
     authentication_classes = [CsrfExemptSessionAuthentication, SocialAuthentication, OAuth2Authentication]
     queryset = User.objects.all()
     http_method_names = ['get', "patch", "options", 'put']
+    filter_backends = [filters.SearchFilter, django_filters.rest_framework.DjangoFilterBackend]
+    search_fields = ['username']
 
     def get_queryset(self):
         try:

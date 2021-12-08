@@ -32,7 +32,6 @@ urlpatterns = [
                   path(r'swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
                   path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
                   path(settings.ADMIN_URL + 'log_viewer/', include('log_viewer.urls')),
-                  path(settings.ADMIN_URL, include('request_viewer.urls')),
                   path(settings.ADMIN_URL, admin.site.urls),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \
               static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

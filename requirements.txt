@@ -25,7 +25,6 @@ django-log-viewer==1.1.4
 django-oauth-toolkit==1.5.0
 django-oauth2-provider==0.2.6.1
 django-oidc-provider==0.7.0
-django-request-viewer==1.0.0
 django-rest-framework-social-oauth2==1.1.0
 django-timezone-field==4.2.1
 djangorestframework==3.12.4
