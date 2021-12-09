@@ -16,7 +16,7 @@ class Event(models.Model):
     organizer = models.ForeignKey(User, blank=True, null=True, related_name='event_organizer', on_delete=models.PROTECT)
     end_date = models.DateField(blank=True, null=True)
     end_time = models.TimeField(blank=True, null=True)
-    participants = models.ManyToManyField(User, blank=True, null=True)
+    participants = models.ManyToManyField(User, blank=True)
     description = models.TextField()
     attachments = ArrayField(models.FileField(upload_to="docs"), null=True, blank=True)
     public = models.BooleanField(default=False)
@@ -68,8 +68,8 @@ def create(sender, instance: Event, created, **kwargs):
             ]
         }
 
-        requests.post(url, headers={
+        print(requests.post(url, headers={
             'Authorization': f'Bearer {instance.organizer.tokens.google_token}',
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-        }, data=json.dumps(event))
+        }, data=json.dumps(event)).text)
