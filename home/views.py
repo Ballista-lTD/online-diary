@@ -62,5 +62,5 @@ class EventApiViewSet(viewsets.ModelViewSet):
         }, data=json.dumps(event)).json()
 
         serializer.save(organizer=self.request.user,
-                        public=self.request.user.tokens.admin and serializer.validated_data["public"],
+                        public=self.request.user.tokens.admin and self.request.data["public"],
                         meet=result["hangoutLink"])

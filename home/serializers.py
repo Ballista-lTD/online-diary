@@ -8,6 +8,6 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = [
             'id', 'name', 'description', 'start_date', 'start_time', 'end_date', 'end_time', 'participants',
-            'organizer', 'public'
+            'organizer', 'public', 'meet'
         ]
         extra_kwargs = {'organizer': {'read_only': True}, 'meet': {'read_only': True}}

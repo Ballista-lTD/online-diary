@@ -20,13 +20,13 @@ class UserApiViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter, django_filters.rest_framework.DjangoFilterBackend]
     search_fields = ['email']
 
-    def get_queryset(self):
-        try:
-            return User.objects.filter(id=self.request.user.id)
-        except User.DoesNotExist:
-            return User.objects.none()
-        except Exception:
-            return User.objects.none()
+    # def get_queryset(self):
+    #     try:
+    #         return User.objects.filter(id=self.request.user.id)
+    #     except User.DoesNotExist:
+    #         return User.objects.none()
+    #     except Exception:
+    #         return User.objects.none()
 
     def list(self, request, *args, **kwargs):
         if not request.user.is_superuser:
