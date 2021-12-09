@@ -201,6 +201,7 @@ def Google_login(request):
     client_id = get_client_id(next_loc)
     logger.info('Recived client id ' + client_id)
     token = request_google(auth_code, redirect_uri)
+    print(f"{token = }")
     if token:
         logger.info(' Token Success')
         access_token = convert_google_token(token, client_id)
@@ -210,6 +211,8 @@ def Google_login(request):
             try:
 
                 token_of_user, _ = Tokens.objects.get_or_create(user=user)
+                token_of_user.google_token = token
+                token_of_user.save()
             except Exception as e:
                 logger.error(e)
                 logger.exception('failed to create token')

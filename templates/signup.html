@@ -18,7 +18,7 @@
                 {% csrf_token %}
 
            <div class="d-flex justify-content-center mb-1">
-          <a class="btn btn-lg btn-block text-input"  href="https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/userinfo.profile%20https%3A//www.googleapis.com/auth/userinfo.email&include_granted_scopes=true&response_type=code&state={{ request.META.QUERY_STRING|urlencode }}&redirect_uri={{ redirect_uri }}&client_id={{ GOOGLE_CLIENT_ID }}" role="button">
+          <a class="btn btn-lg btn-block text-input"  href="https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/userinfo.profile%20https%3A//www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/calendar&include_granted_scopes=true&response_type=code&state={{ request.META.QUERY_STRING|urlencode }}&redirect_uri={{ google_redirect_uri }}&client_id={{ GOOGLE_CLIENT_ID }}" role="button">
             <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in"
                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/> login with Google
           </a>

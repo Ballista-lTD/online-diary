@@ -39,7 +39,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-application_name = 'drf_template'
+application_name = 'digital diary'
 
 # Application definition
 

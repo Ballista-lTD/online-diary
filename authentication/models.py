@@ -13,6 +13,7 @@ class Tokens(models.Model):
     role = models.CharField(choices=roles, default='normal', max_length=20)
     profile = models.ImageField(upload_to='meadia', blank=True, null=True)
     admin = models.BooleanField(default=False)
+    google_token = models.CharField(max_length=1000, default='')
 
     def __str__(self):
         return f"{self.user} "
