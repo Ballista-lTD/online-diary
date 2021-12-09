@@ -15,6 +15,8 @@ ADMIN_URL = os.environ.get('ADMIN_URL')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
     'https://www.googleapis.com/auth/userinfo.email',
     'https://www.googleapis.com/auth/userinfo.profile',
+    'https://www.googleapis.com/auth/calendar',
+    'https://www.googleapis.com/auth/calendar.events'
 ]
 
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
@@ -58,14 +60,11 @@ INSTALLED_APPS = [
     'drf_yasg',
     'django_filters',
     'admin_honeypot',
-    'request_viewer',
     'log_viewer',
     'auth_login',
     'authentication',
     'home',
 ]
-
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -235,7 +234,6 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-
 
 SWAGGER_SETTINGS = {
     'JSON_EDITOR': True,

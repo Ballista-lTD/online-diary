@@ -18,7 +18,7 @@ class UserApiViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     http_method_names = ['get', "patch", "options", 'put']
     filter_backends = [filters.SearchFilter, django_filters.rest_framework.DjangoFilterBackend]
-    search_fields = ['username']
+    search_fields = ['email']
 
     def get_queryset(self):
         try:
