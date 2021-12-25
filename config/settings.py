@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'auth_login',
     'authentication',
     'home',
+    'user'
 ]
 
 MIDDLEWARE = [

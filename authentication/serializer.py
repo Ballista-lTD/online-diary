@@ -11,11 +11,11 @@ class GetTokensSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tokens
         fields = [
-            'user', 'phone_number', 'admin'
+            'user', 'phone_number', 'access_code', 'avatar', 'roles'
 
         ]
         extra_kwargs = {
-            'user': {'read_only': True}, 'admin': {'read_only': True},
+            'user': {'read_only': True}
         }
 
 
@@ -24,7 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', "first_name", "last_name", 'tokens',)
+        fields = ('id', 'username', 'email', "first_name", "last_name", 'tokens')
 
 
 class GroupSerializer(serializers.ModelSerializer):

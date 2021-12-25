@@ -1,12 +1,12 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from home.views import EventApiViewSet
+from home.views import EventApiViewSet, ReportApiViewSet
 
-
-# Setup the URLs and include login URLs for the browsable API.
 router = DefaultRouter()
-router.register('event', EventApiViewSet)
+router.register('', EventApiViewSet)
+router.register('report', ReportApiViewSet)
+
 urlpatterns = [
-    path(r'', include(router.urls)),
+    path(r'', include(router.urls))
 ]
