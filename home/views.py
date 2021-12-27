@@ -22,7 +22,8 @@ class EventApiViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         if self.request.user.is_authenticated:
             events = Event.objects.filter(
-                Q(type__in=UNPROTECTED_EVENTS) | Q(access_code__startswith=self.request.user.tokens.access_code))
+                Q(type__in=UNPROTECTED_EVENTS) | Q(
+                    organizer__tokens__access_code__startswith=self.request.user.tokens.access_code))
         else:
             events = Event.objects.filter(type__in=UNPROTECTED_EVENTS)
 
@@ -64,14 +65,20 @@ class EventApiViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer: EventSerializer):
 
-        participants = [*serializer.data.get("participants"),
-                        *[group.members.all() for group in Group.objects.filter(pk__in=self.request["groups"])]]
+        participants = [*serializer.validated_data.get("participants"),
+                        *[group.members.all() for group in Group.objects.filter(
+                            pk__in=self.request.data["groups"])]] \
+            if "groups" in self.request.data else serializer.validated_data.get("participants")
 
-        serializer = EventSerializer(data={**serializer.data, "organizer": self.request.user,
-                                           "type": self.request.data["type"], "participants": participants})
+        serializer = EventSerializer(data={
+            **serializer.validated_data, "organizer": self.request.user,
+            "type": self.request.data["type"],
+            "participants": [p.id for p in participants]
+        })
 
         serializer.is_valid(raise_exception=True)
-        meet = self.create_calender_event(serializer) if serializer.data.get("type") in PROTECTED_EVENTS else None
+        meet = self.create_calender_event(serializer) \
+            if serializer.validated_data.get("type") in PROTECTED_EVENTS else None
 
         serializer.save(meet=meet)
 
@@ -83,5 +90,5 @@ class ReportApiViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'post', 'patch', 'delete']
 
     def get_queryset(self):
-        return Report.objects.filter(event__access_code__startswith=self.request.user.tokens.access_code) \
+        return Report.objects.filter(access_code__startswith=self.request.user.tokens.access_code) \
             .order_by("event__end_date").reverse()

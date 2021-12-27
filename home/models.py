@@ -23,10 +23,6 @@ class Event(models.Model):
     meet = models.CharField(max_length=36, null=True, blank=True)
     type = models.CharField(max_length=15, choices=tuple([(e, e) for e in EVENT_TYPES]), default="Private")
 
-    @property
-    def access_code(self):
-        return self.organizer.tokens.access_code
-
     def __str__(self):
         return f"Event : {self.name} ({self.start_date} / {self.start_time})"
 
@@ -39,3 +35,10 @@ class Report(models.Model):
     attachments = ArrayField(models.FileField(upload_to="docs"), null=True, blank=True)
     participants_count = models.PositiveIntegerField(default=0)
     report = models.TextField()
+    access_code = models.CharField(max_length=100, default='0')
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+
+        self.access_code = self.event.organizer.tokens.access_code
+        super().save(force_insert, force_update, using, update_fields)

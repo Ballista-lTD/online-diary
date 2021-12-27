@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from home.views import EventApiViewSet, ReportApiViewSet
+from .views import EventApiViewSet, ReportApiViewSet
 
 router = DefaultRouter()
 router.register('', EventApiViewSet)

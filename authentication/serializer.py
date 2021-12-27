@@ -10,13 +10,8 @@ from .models import Tokens
 class GetTokensSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tokens
-        fields = [
-            'user', 'phone_number', 'access_code', 'avatar', 'roles'
-
-        ]
-        extra_kwargs = {
-            'user': {'read_only': True}
-        }
+        fields = ['user', 'phone_number', 'access_code', 'avatar', 'roles', 'access_code']
+        extra_kwargs = {'user': {'read_only': True}, 'access_code': {'read_only': True}, 'roles': {'read_only': True}}
 
 
 class UserSerializer(serializers.ModelSerializer):

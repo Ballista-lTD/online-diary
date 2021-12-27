@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Event, EVENT_TYPES, Report
+from .models import Event, Report
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -12,22 +12,17 @@ class EventSerializer(serializers.ModelSerializer):
         ]
         extra_kwargs = {'organizer': {'read_only': True}, 'meet': {'read_only': True}}
 
-    def validate_type(self, value: str):
-        if not value:
-            raise serializers.ValidationError({"type": "Event type is required"})
+    def is_valid(self, raise_exception=False):
+        super().is_valid(raise_exception)
 
-        if value not in EVENT_TYPES:
-            raise serializers.ValidationError({"type": f"Unknown event type {value}"})
-
-        if value not in self.data.get('organizer').token.roles:
-            raise serializers.ValidationError({"type": f"Insufficient privilege to create event of type {value}"})
-
-        return value
+        if self.validated_data.get("organizer") and \
+                self.validated_data.get("type") not in self.validated_data.get("organizer").token.roles:
+            raise serializers.ValidationError(
+                {"type": f"Insufficient privilege to create event of type {self.validated_data.get('type')}"})
 
 
 class ReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = Report
-        fields = [
-            'id', 'event', 'attachments', 'participants_count', 'report'
-        ]
+        fields = ['id', 'event', 'attachments', 'participants_count', 'report', 'access_code']
+        extra_kwargs = {'access_code': {'read_only': True}, 'event': {'read_only': True}}
